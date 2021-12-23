@@ -8,6 +8,7 @@
 | -------------------- | ---------- | ----------------------|
 | user_name            | string     | null: false           |
 | email                | string     | null: false           |
+|                      |            | unique: true          |
 | encrypted_password   | string     | null: false           |
 | last_name            | string     | null: false           |
 | first_name           | string     | null: false           |
@@ -18,7 +19,8 @@
 ### アソシエーション
 has_many :items
 has_many :comments
-has_many :purchase
+has_many :purchases
+has_many :orders
 
 
 
@@ -26,21 +28,21 @@ has_many :purchase
 
 | column                 | Type          | options               |
 | ---------------------- | ------------- | ----------------------|
-| image                  | binary        | null: false           |
 | product                | string        | null: false           |
 | product_description    | text          | null: false           |
-| category               | string        | null: false           |
-| condition              | string        | null: false           |
-| postage                | integer       | null: false           |
-| region                 | string        | null: false           |
-| shipping_date          | integer       | null: false           |
+| category_id            | integer       | null: false           |
+| condition_id           | integer       | null: false           |
+| postage_id             | integer       | null: false           |
+| region_id              | integer       | null: false           |
+| shipping_date_id       | integer       | null: false           |
 | price                  | integer       | null: false           |
 | user                   | references    | foreign_key: true     |  
 
 ### アソシエーション
-belongs_to :users
+belongs_to :user
 has_many :comments
-
+has_one :purchase
+has_many :orders
 
 
 
@@ -53,8 +55,8 @@ has_many :comments
 | items      | reference    | foreign_key: true     |
 
 ### アソシエーション
-belongs_to :users
-belongs_to :items
+belongs_to :user
+belongs_to :item
 
 
 
@@ -71,9 +73,25 @@ belongs_to :items
 | prefecture             | string        | null: false           |
 | city                   | string        | null: false           |
 | address                | string        | null: false           |
-| building_name          | string        | null: false           |
-| phone_number           | integer       | null: false
+|                        |               | foreign_key: true     |
+| building_name          | string        |                       |
+| phone_number           | string        | null: false           |
 | user                   | references    | foreign_key: true     |  
 
 ### アソシエーション
-belongs_to :users
+belongs_to :user
+belongs_to :order
+
+
+
+## ordersテーブル
+
+| column             | Type         | options               |
+| -------------------| ------------ | ----------------------|
+| purchase_user_id   | string       | null: false           |
+|                    |              | foreign_key: true     |
+| product_id         | string       | null: false           |
+|                    |              | foreign_key: true     |
+### アソシエーション
+belongs_to :user
+belongs_to :item
