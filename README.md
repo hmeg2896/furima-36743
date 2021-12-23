@@ -33,6 +33,7 @@ has_many :orders
 | category_id            | integer       | null: false           |
 | condition_id           | integer       | null: false           |
 | postage_id             | integer       | null: false           |
+| prefecture_id          | integer       | null: false           |
 | region_id              | integer       | null: false           |
 | shipping_date_id       | integer       | null: false           |
 | price                  | integer       | null: false           |
@@ -61,22 +62,18 @@ belongs_to :item
 
 
 
-## purchaseテーブル
+## purchasesテーブル
 
 | column                 | Type          | options               |
 | ---------------------- | ------------- | ----------------------|
-| card_number            | integer       | null: false           |
-| exp_month              | integer       | null: false           |
-| exp_year               | integer       | null: false           |
-| security_code          | integer       | null: false           |
-| postal_code            | integer       | null: false           |
-| prefecture             | string        | null: false           |
+| postal_code            | string        | null: false           |
+| prefecture_id          | string        | null: false           |
 | city                   | string        | null: false           |
 | address                | string        | null: false           |
-|                        |               | foreign_key: true     |
 | building_name          | string        |                       |
 | phone_number           | string        | null: false           |
 | user                   | references    | foreign_key: true     |  
+| order                  | references    | foreign_key: true     |
 
 ### アソシエーション
 belongs_to :user
@@ -89,9 +86,11 @@ belongs_to :order
 | column             | Type         | options               |
 | -------------------| ------------ | ----------------------|
 | purchase_user_id   | string       | null: false           |
-|                    |              | foreign_key: true     |
 | product_id         | string       | null: false           |
-|                    |              | foreign_key: true     |
+| user               | reference    | foreign_key: true     |
+| item               | reference    | foreign_key: true     |
+
+
 ### アソシエーション
 belongs_to :user
 belongs_to :item
