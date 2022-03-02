@@ -72,12 +72,12 @@ RSpec.describe Item, type: :model do
       it 'priceが299以下だと登録できない' do
         @item.price = 298
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is too short (minimum is 299 characters)")
+        expect(@item.errors.full_messages).to include("Price must be greater than or equal to 300")
       end
       it 'priceが10000000以上だと登録できない' do
         @item.price = 10000001
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999", "Price is too short (minimum is 299 characters)")
+        expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999", "Price is too long (maximum is 7 characters)")
       end
     end
   end
