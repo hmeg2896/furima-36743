@@ -9,7 +9,7 @@ RSpec.describe Item, type: :model do
       it 'product,product_description,category_id,condition_id,postage_id,prefecture_id,shipping_date_id,price' do 
         expect(@item).to be_valid
       end
-      it 'image' do 
+      it 'image' do
         expect(@item.image).to be_valid
       end
     end
