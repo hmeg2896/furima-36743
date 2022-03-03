@@ -14,7 +14,14 @@ class Item < ApplicationRecord
   validates :image, presence: true
 
   belongs_to :user
-  has_many :comments
-  has_one :order
+  # has_many :comments
+  # has_one :order
   has_one_attached :image
+  extend ActiveHash::Associations::ActiveRecordExtensions
+  belongs_to :category
+  belongs_to :condition
+  belongs_to :postage
+  belongs_to :prefecture
+  belongs_to :shipping
+
 end
