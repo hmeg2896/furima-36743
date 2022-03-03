@@ -12,7 +12,7 @@ RSpec.describe Item, type: :model do
       it 'image' do
         expect(@item.image).to be_valid
       end
-    end
+      end
     context '出品できないとき' do
       it 'productが空では登録できない' do
         @item.product = ''
@@ -78,6 +78,16 @@ RSpec.describe Item, type: :model do
         @item.price = 10000001
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999", "Price is too long (maximum is 7 characters)")
+      end
+      it 'priceが半角数値でないと登録できない'do 
+        @item.price = 'あｱＡAａa亜１￥'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Price is not a number", "Price is too short (minimum is 3 characters)")
+      end
+      it 'userと紐付いていないと登録できない'do 
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end

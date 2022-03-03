@@ -7,8 +7,10 @@ class Item < ApplicationRecord
   validates :postage_id, presence: true, numericality: { other_than: 0 , message: "can't be blank"}
   validates :prefecture_id, presence: true, numericality: { other_than: 0 , message: "can't be blank"}
   validates :shipping_date_id, presence: true, numericality: { other_than: 0 , message: "can't be blank"}
-  validates :price, presence: true, numericality: { less_than_or_equal_to: 9999999, 
-    greater_than_or_equal_to: 300 }, length: { minimum: 3, maximum: 7 }
+  validates :price, presence: true, 
+             numericality: { less_than_or_equal_to: 9999999, greater_than_or_equal_to: 300 }, 
+             length: { minimum: 3, maximum: 7 }, 
+             format: { with: /\A[0-9]+\z/ }
   validates :image, presence: true
 
   belongs_to :user
