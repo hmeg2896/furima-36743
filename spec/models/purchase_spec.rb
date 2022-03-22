@@ -3,11 +3,14 @@ require 'rails_helper'
 RSpec.describe Purchase, type: :model do
   describe '商品購入機能' do
     before do
-      @purchase = FactoryBot.build(:purchase_address)
+      user = FactoryBot.create(:user)
+      item = FactoryBot.create(:item)
+      @purchase = FactoryBot.build(:purchase_address, user_id: user.id, item_id: item.id)
     end
 
     context '内容に問題ない場合' do
       it 'すべての値が正しく入力されていれば保存できること' do
+        
         expect(@purchase).to be_valid
       end
       it '建物名の値が空でも保存できること' do
@@ -67,7 +70,16 @@ RSpec.describe Purchase, type: :model do
         @purchase.valid?
         expect(@purchase.errors.full_messages).to include("Token can't be blank")
       end
-
+      it 'userと紐付いていないと登録できない'do 
+        @purchase.user_id = nil
+        @purchase.valid?
+        expect(@purchase.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemと紐付いていないと登録できない'do 
+        @purchase.item_id = nil
+        @purchase.valid?
+        expect(@purchase.errors.full_messages).to include("Item can't be blank")
+      end
     end
   end
 end

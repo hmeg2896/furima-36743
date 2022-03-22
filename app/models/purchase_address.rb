@@ -8,8 +8,8 @@ class PurchaseAddress
     validates :city,format: { with: /\A[一-龥ぁ-ん]/}
     validates :address
     validates :phone_number,format: { with: /\A\d{10,11}\z/},length: { minimum: 10, maximum: 11 }
-    validates :item_id
     validates :user_id
+    validates :item_id
     validates :token
   end
   
@@ -17,6 +17,6 @@ class PurchaseAddress
   
   def save
     order = Order.create(item_id: item_id, user_id: user_id)
-    Purchase.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, address: address, building_name: building_name, phone_number: phone_number)
+    Purchase.create(postal_code: postal_code, prefecture_id: prefecture_id, city: city, address: address, building_name: building_name, phone_number: phone_number, order_id: order.id)
   end
 end
