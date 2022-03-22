@@ -8,7 +8,6 @@ RSpec.describe Purchase, type: :model do
 
     context '内容に問題ない場合' do
       it 'すべての値が正しく入力されていれば保存できること' do
-        #binding.pry
         expect(@purchase).to be_valid
       end
       it '建物名の値が空でも保存できること' do
@@ -63,6 +62,12 @@ RSpec.describe Purchase, type: :model do
         @purchase.valid?
         expect(@purchase.errors.full_messages).to include("Phone number is invalid")
       end
+      it 'tokenが空では登録できない' do
+        @purchase.token = nil
+        @purchase.valid?
+        expect(@purchase.errors.full_messages).to include("Token can't be blank")
+      end
+
     end
   end
 end
