@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :select_item, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show, :destroy]
   before_action :move_to_index, only: [:edit, :update]
+  before_action :move_to_index_soldout, only: [:edit]
   
   def index
     @items = Item.all.order(created_at: :desc)
@@ -21,6 +22,7 @@ class ItemsController < ApplicationController
   end
 
   def show
+    @items = Item.all.order(created_at: :desc)
   end
 
   def edit
@@ -53,6 +55,12 @@ class ItemsController < ApplicationController
   def move_to_index 
     unless current_user.id == @item.user.id
     redirect_to action: :index
+    end
+  end
+
+  def move_to_index_soldout
+    if @item.order != nil
+      redirect_to action: :index
     end
   end
 
