@@ -4,7 +4,7 @@ class PurchaseAddress
   
   with_options presence: true do
     validates :postal_code,format: { with: /\A\d{3}[-]\d{4}\z/}
-    validates :prefecture_id,numericality: {other_than: 0, message: "can't be blank"}
+    validates :prefecture_id,numericality: {other_than: 0, message: "を選択してください"}
     validates :city,format: { with: /\A[一-龥ぁ-ん]/}
     validates :address
     validates :phone_number,format: { with: /\A\d{10,11}\z/},length: { minimum: 10, maximum: 11 }
